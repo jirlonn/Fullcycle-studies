@@ -1,0 +1,54 @@
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "partner1@user.com",
+    "password": "secret"
+}
+
+###
+POST http://localhost:3000/partners
+Content-Type: application/json
+
+{
+    "name": "partner 1",
+    "email": "partner1@user.com",
+    "password": "secret",
+    "company_name": "company name 1"
+}
+
+###
+POST http://localhost:3000/costumers
+Content-Type: application/json
+
+{
+    "name": "costumer 1",
+    "email": "costumer1@user.com",
+    "password": "secret",
+    "address": "address test",
+    "phone": "1639832100"
+}
+
+### Criacao do evento pelo parceiros
+POST http://localhost:3000/partners/events
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30
+
+{
+    "name": "event test 1",
+    "description": "descricao do evento",
+    "date": "2025-11-29T00:00:00",
+    "location": "rua x, bairro etc"
+}
+
+### Listagem de evento do parceiro
+GET http://localhost:3000/partners/events
+
+### Listagem de um evento do parceiro
+GET http://localhost:3000/events/partners/1000
+
+### Listagem de eventos
+GET http://localhost:3000/events
+
+### Listagem de um evento
+GET http://localhost:3000/events/1000
