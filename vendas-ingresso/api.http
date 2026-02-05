@@ -1,3 +1,5 @@
+### Autenticacao partner 1
+# @name loginPartner1
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
@@ -7,7 +9,36 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/partners
+@tokenPartner1 = {{ loginPartner1.response.body.token }}
+
+### Autenticacao partner 2
+# @name loginPartner2
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "partner2@user.com",
+    "password": "secret"
+}
+
+###
+@tokenPartner2 = {{ loginPartner2.response.body.token }}
+
+### Autenticacao customer
+# @name loginCustomer1
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "customer1@user.com",
+    "password": "secret"
+}
+
+###
+@tokenCustomer1 = {{ loginCustomer1.response.body.token }}
+
+### Criacao do partner 1
+POST http://localhost:3000/partners/register
 Content-Type: application/json
 
 {
@@ -17,13 +48,24 @@ Content-Type: application/json
     "company_name": "company name 1"
 }
 
-###
-POST http://localhost:3000/costumers
+### Criacao do partner 2
+POST http://localhost:3000/partners/register
 Content-Type: application/json
 
 {
-    "name": "costumer 1",
-    "email": "costumer1@user.com",
+    "name": "partner 2",
+    "email": "partner2@user.com",
+    "password": "secret",
+    "company_name": "company name 1"
+}
+
+### Criacao do customer
+POST http://localhost:3000/customers/register
+Content-Type: application/json
+
+{
+    "name": "customer 1",
+    "email": "customer1@user.com",
     "password": "secret",
     "address": "address test",
     "phone": "1639832100"
@@ -32,7 +74,7 @@ Content-Type: application/json
 ### Criacao do evento pelo parceiros
 POST http://localhost:3000/partners/events
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30
+Authorization: Bearer {{ tokenPartner1}}
 
 {
     "name": "event test 1",
@@ -41,14 +83,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
     "location": "rua x, bairro etc"
 }
 
-### Listagem de evento do parceiro
+### Listagem de eventos do parceiro
 GET http://localhost:3000/partners/events
+Authorization: Bearer {{ tokenPartner1}}
 
 ### Listagem de um evento do parceiro
-GET http://localhost:3000/events/partners/1000
+GET http://localhost:3000/partners/events/1
+Authorization: Bearer {{ tokenPartner1}}
 
 ### Listagem de eventos
 GET http://localhost:3000/events
 
 ### Listagem de um evento
-GET http://localhost:3000/events/1000
+GET http://localhost:3000/events/1

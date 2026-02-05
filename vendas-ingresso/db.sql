@@ -23,15 +23,15 @@ CREATE TABLE IF NOT EXISTS `partners` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `costumers` (
+CREATE TABLE IF NOT EXISTS `customers` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `address` VARCHAR(255) NOT NULL,
   `phone` VARCHAR(255) NOT NULL,
   `created_at` TIMESTAMP NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_costumers_users_idx` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `fk_costumers_users`
+  INDEX `fk_customers_users_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `fk_customers_users`
     FOREIGN KEY (`user_id`)
     REFERENCES `users` (`id`)
     ON DELETE NO ACTION
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `costumers` (
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `events` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NULL,
   `description` VARCHAR(255) NULL,
   `date` TIMESTAMP NULL,
